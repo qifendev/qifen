@@ -1,0 +1,59 @@
+#################### 此配置为测试环境 ######################
+# 同步依赖后，按照下面修改配置即可运行
+# 如果需要运行到服务器请看application-pro.yml文件
+#
+# 运维（杀死jar）：
+# 1.linux下可通过netstat -lnp | grep 7778查看进程pid，然后根据进程pid杀死运行中的jar： kill -9 进程pid
+# 2.win下可通过netstat -ano | findstr 7778查看进程pid，然后根据进程pid杀死运行中的jar： taskkill -pid 进程pid -f
+
+
+server:
+  port: 7777 #运行的端口
+
+# 下面这个文件目录必须手动创建
+# 里面可有3个文件夹也需要手动创建：pic用于存图片、avatar用于存头像、tell用于存公告（创建tell.txt在里面）。
+duck:
+  path: /home/qifen/duck # 案例： win路径为:D:/duck   linux路径为/home/qifen/duck
+
+# 配置数据库
+# url中的host改为你的主机ip，port改为数据库端口，name改为数据库名，然后就是数据库用户密码自己改，数据库必须手动创建，表会自动创建
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://host:port/name?characterEncoding=UTF-8&useUnicode=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai
+    username: root #数据库用户
+    password: 'password' #数据库密码
+
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    show-sql: false
+    hibernate:
+      ddl-auto: update
+  servlet:
+    multipart:
+      enabled: true
+      #上传单个文件大小
+      maxFileSize: 100MB
+      #总上传文件大小
+      maxRequestSize: 1000MB
+
+  # 发送邮箱验证码配置
+  # 根据实际情况填写，这里给出这个案例，但是不可用，可到QQ邮箱PC网页申请：设置》账户》POP3/IMAP/SMTP/Exchange/CardDAV/CalDAV服务
+  mail:
+    host: smtp.qq.com
+    username: 858810078@qq.com
+    password: xxxxxxxxxxxxxxxx
+    default-encoding: UTF-8
+    port: 465
+    properties:
+      mail:
+        smtp:
+          starttls:
+            enable: true
+            auth: true
+            required: true
+          socketFactory:
+            port: 465
+            class: javax.net.ssl.SSLSocketFactory
+            fallback: false
+

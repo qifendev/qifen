@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>详情-大可图库</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+<body style="background: #494e54;">
+
+
+<nav class="navbar navbar-expand-md navbar-dark  bg-dark">
+    <a class="navbar-brand text-light" th:href="@{/}">大可图库</a>
+
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav mr-auto">
+
+            <li class="nav-item active">
+                <a class="nav-link" href="#">图片详情</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container-fluid main" style="padding: 5px 20px;">
+    <div class="row">
+        <div class="col-sm-8 col-md-9 col-lg-9 col-xl-9" style="padding: 5px;">
+
+            <div class="card bg-dark" style="padding: 15px 0;">
+
+                <div class="container d-flex justify-content-center align-items-center">
+
+
+                    <!--一个轮播-->
+                    <div style="height: 100%;width: 100%">
+                        <div id="demo" class="carousel slide" data-interval="false" style="height: 100%">
+
+                            <ul class="carousel-indicators">
+                                <li th:if="${pic.pictureTwo!=null}" data-target="#demo" data-slide-to="0"
+                                    class="active"></li>
+                                <li th:if="${pic.pictureTwo!=null}" data-target="#demo" data-slide-to="1"></li>
+                                <li th:if="${pic.pictureThree!=null}" data-target="#demo" data-slide-to="2"></li>
+                                <li th:if="${pic.pictureFour!=null}" data-target="#demo" data-slide-to="3"></li>
+                                <li th:if="${pic.pictureFive!=null}" data-target="#demo" data-slide-to="4"></li>
+                                <li th:if="${pic.pictureSix!=null}" data-target="#demo" data-slide-to="5"></li>
+                                <li th:if="${pic.pictureSeven!=null}" data-target="#demo" data-slide-to="6"></li>
+                                <li th:if="${pic.pictureEight!=null}" data-target="#demo" data-slide-to="7"></li>
+                                <li th:if="${pic.pictureNine!=null}" data-target="#demo" data-slide-to="8"></li>
+                            </ul>
+
+
+                            <!-- 轮播图片 -->
+                            <div class="carousel-inner">
+                                <div class="carousel-item active" th:if="${pic.pictureOne!=null}">
+                                    <div class="d-flex justify-content-center align-items-center">
+                                        <img th:src="@{'/pic/'+${pic.pictureOne}}" class="img-fluid thumbnail" loading="lazy"
+                                             style="max-height: 600px; min-height: 200px"></div>
+                                </div>
+                                <div class="carousel-item" th:if="${pic.pictureTwo!=null}">
+                                    <div class="d-flex justify-content-center align-items-center">
+                                        <img th:src="@{'/pic/'+${pic.pictureTwo}}" class="img-fluid thumbnail" loading="lazy"
+                                             style="max-height: 600px; min-height: 200px"></div>
+                                </div>
+                                <div class="carousel-item" th:if="${pic.pictureThree!=null}">
+                                    <div class="d-flex justify-content-center align-items-center">
+                                        <img th:src="@{'/pic/'+${pic.pictureThree}}" class="img-fluid thumbnail" loading="lazy"
+                                             style="max-height: 600px; min-height: 200px"></div>
+                                </div>
+                                <div class="carousel-item" th:if="${pic.pictureFour!=null}">
+                                    <div class="d-flex justify-content-center align-items-center">
+                                        <img th:src="@{'/pic/'+${pic.pictureFour}}" class="img-fluid thumbnail" loading="lazy"
+                                             style="max-height: 600px; min-height: 200px"></div>
+                                </div>
+                                <div class="carousel-item" th:if="${pic.pictureFive!=null}">
+                                    <div class="d-flex justify-content-center align-items-center">
+                                        <img th:src="@{'/pic/'+${pic.pictureFive}}" class="img-fluid thumbnail" loading="lazy"
+                                             style="max-height: 600px; min-height: 200px"></div>
+                                </div>
+                                <div class="carousel-item" th:if="${pic.pictureSix!=null}">
+                                    <div class="d-flex justify-content-center align-items-center">
+                                        <img th:src="@{'/pic/'+${pic.pictureSix}}" class="img-fluid thumbnail" loading="lazy"
+                                             style="max-height: 600px; min-height: 200px"></div>
+                                </div>
+                                <div class="carousel-item" th:if="${pic.pictureSeven!=null}">
+                                    <div class="d-flex justify-content-center align-items-center">
+                                        <img th:src="@{'/pic/'+${pic.pictureSeven}}" class="img-fluid thumbnail" loading="lazy"
+                                             style="max-height: 600px; min-height: 200px"></div>
+                                </div>
+                                <div class="carousel-item" th:if="${pic.pictureEight!=null}">
+                                    <div class="d-flex justify-content-center align-items-center">
+                                        <img th:src="@{'/pic/'+${pic.pictureEight}}" class="img-fluid thumbnail" loading="lazy"
+                                             style="max-height: 600px; min-height: 200px"></div>
+                                </div>
+                                <div class="carousel-item" th:if="${pic.pictureNine!=null}">
+                                    <div class="d-flex justify-content-center align-items-center">
+                                        <img th:src="@{'/pic/'+${pic.pictureNine}}" class="img-fluid thumbnail" loading="lazy"
+                                             style="max-height: 600px; min-height: 200px"></div>
+                                </div>
+                            </div>
+
+                            <!-- 左右切换按钮 -->
+                            <a th:if="${pic.pictureTwo!=null}" class="carousel-control-prev" href="#demo"
+                               data-slide="prev"
+                               style="background: #33333333" data-toggle="tooltip" title="上一个图">
+                                <span class="carousel-control-prev-icon"></span>
+                            </a>
+                            <a th:if="${pic.pictureTwo!=null}" class="carousel-control-next" href="#demo"
+                               data-slide="next"
+                               style="background: #33333333" data-toggle="tooltip" title="下一个图">
+                                <span class="carousel-control-next-icon"></span>
+                            </a>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+        </div>
+
+
+        <!--        th:src="@{'/avatar/'+${user.getUserAvatar()}}"-->
+        <div class="col-sm-4 col-md-3 col-lg-3 col-xl-3" style="padding: 5px;">
+            <div class=" bg-dark card" style="padding: 12px 20px  0; ">
+                <img alt="头像" data-toggle="tooltip" title="这个是头像"
+                     th:src="@{'/avatar/'+${user.getUserAvatar()}}" loading="lazy"
+                     class="rounded-circle border border-danger thumbnail"
+                     style="width:60px;margin-right: 20px; height: 60px;">
+                <p class="text-light" style="margin: 0" th:text="${user.getUserNickname()}"></p>
+                <small class="text-light" style="margin: 0;padding: 0"
+                       th:text="${user.getUserSignature()}"></small>
+
+
+                <div style="height: 1px; width: 100%; margin-top: 5px; margin-bottom: 5px; background: azure"></div>
+
+                <p class="text-light" style="margin: 0" th:text="${pic.getPictureSay()}"></p>
+                <small class="text-light" style="margin: 0;padding: 0"
+                       th:text="${pic.getPictureFlag()}"></small>
+
+
+                <p style="margin: 0 0 20px 0"><small class="text-secondary"
+                                                     th:text="${#dates.format(pic.pictureTime,'yyyy.MM.dd HH:mm:ss')}"></small>
+                </p>
+
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+
+
+</body>
+</html>

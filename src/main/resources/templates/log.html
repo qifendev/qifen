@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${title}"></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="./seven.js"></script>
+</head>
+<body style="background: #494e54">
+
+<nav class="navbar navbar-expand-md navbar-dark  bg-dark">
+    <a class="navbar-brand text-light" th:href="@{/}">大可图库</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+            aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav mr-auto">
+
+            <li class="nav-item" th:class="${act=='login'}? 'active':''">
+                <a class="nav-link" th:href="@{/log?act=login}">登录</a>
+            </li>
+            <li class="nav-item" th:class="${act=='sign'}? 'active':''">
+                <a class="nav-link" th:href="@{/log?act=sign}">注册/找密</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<!--<div th:include="~{fragment::login}" th:if="${act=='login'}"></div>-->
+<!--<div th:include="~{fragment::sign}" th:if="${act=='sign'}"></div>-->
+
+<!--登录-->
+<div th:if="${act=='login'}">
+    <div class="container col-sm-4 col-md-3 col-lg-3 col-xl-3" style="margin-top: 50px;">
+        <h2 class="text-light">登录</h2>
+        <div style="margin-top: 20px">
+            <div class="form-group">
+                <!--<label for="loginmail" class="text-light">邮箱:</label>-->
+                <input type="email" class="form-control" id="loginMail" placeholder="邮箱">
+            </div>
+            <div class="form-group">
+                <!--<label for="pwd" class="text-light">密码:</label>-->
+                <input type="password" class="form-control" id="loginPas" placeholder="密码">
+            </div>
+            <!--        <div class="custom-control custom-checkbox mb-3">-->
+            <!--            <input type="checkbox" class="custom-control-input" id="customCheck" name="example1">-->
+            <!--            <label class="custom-control-label text-light" for="customCheck">记住密码</label>-->
+            <!--        </div>-->
+            <button class="btn btn-success text-light" onclick="login()" style="float: right;">登录
+            </button>
+        </div>
+        <br><br>
+        <div class="card bg-danger text-white" id="loginInfo" style="visibility: hidden;">
+            <div class="card-body" id="loginInfoText" style="padding: 0;"></div>
+        </div>
+        <span class="text-secondary">如未注册或者需要改密码，可点击上方的<a class="text-primary" href="/log?act=sign">注册/找密</a>,
+            如想回到主页，可点击上方的大可图库回到<a class="text-primary" href="/">首页</a>。
+        </span>
+
+    </div>
+</div>
+
+<!--注册-->
+<div th:if="${act=='sign'}">
+    <div class="container col-sm-4 col-md-3 col-lg-3 col-xl-3" style="margin-top: 50px;">
+        <h2 class="text-light">注册/找密</h2>
+        <!--        zc-->
+        <div style="margin-top: 20px">
+            <div class="form-group">
+                <input type="email" class="form-control" id="signEmail" placeholder="邮箱">
+            </div>
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" id="signCode" placeholder="验证码">
+                <div class="input-group-append" id="getCodeButton" onclick="getCode()">
+                    <button class="btn btn-primary" id="codeButton">获取验证码</button>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" id="pas" placeholder="密码">
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control " id="conPas" placeholder="确认密码">
+            </div>
+
+
+            <button class="btn btn-success text-light" id="signButton" onclick="signPost()" style="float: right;">注册
+            </button>
+        </div>
+        <br>
+        <br>
+        <div class="card bg-danger text-white" id="signInfo" style="visibility: hidden;">
+            <div class="card-body" id="signInfoText" style="padding: 0;"></div>
+        </div>
+        <span class="text-secondary">此操作第一次为注册，重复操作为更改密码</br>如已注册/改密，可点击上方的<a class="text-primary" href="/log">登录</a>
+            如想回到主页，可点击上方的大可图库回到<a class="text-primary" href="/">首页</a>。
+            <br>账号必须输入一个邮箱,验证码为6位数，点击获取验证码将会发送到您的邮箱
+            ,密码或者确认密码必须为8-20位数字或者大小写字母且两次输入相同。</span>
+
+    </div>
+</div>
+
+
+</body>
+</html>

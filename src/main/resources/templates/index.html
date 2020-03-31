@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>主页-大可图库</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+<body style="background: #494e54;margin: 0;padding: 0;">
+<nav class="navbar navbar-expand-md navbar-dark  bg-dark">
+    <a class="navbar-brand " th:href="@{/}">大可图库</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+            aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav mr-auto">
+
+            <li class="nav-item" th:class="${main=='main'}? 'active':''">
+                <a class="nav-link" th:href="@{/}" href="#">最近</a>
+            </li>
+
+            <li class="nav-item" th:class="${go=='/?go=hot'}? 'active':''">
+                <a class="nav-link" th:href="@{/?go=hot}"
+                   href="#">热门</a>
+            </li>
+
+            <li class="nav-item " data-toggle="tooltip" title="如未登录，点击不跳转">
+                <a class="nav-link" th:href="@{/pub}"
+                   href="#">发布</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link"
+                   th:href="@{/isLog}" th:text="${nick}"></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" th:if="${nick!='登录/注册/找密'}"
+                   th:href="@{/logout}">注销</a>
+            </li>
+
+        </ul>
+
+        <form action="/sea" method="get" class="input-group form-inline col-md-3 col-12 ">
+            <input th:value="${find}" name="find" type="text" class="form-control bg-light"
+                   th:class="${search=='search'} ? 'border border-danger form-control bg-light':'form-control bg-light'"
+                   placeholder="输入你想搜索的">
+            <a class="input-group-append">
+                <button class="btn btn-info" type="submit">搜索</button>
+            </a>
+
+        </form>
+
+    </div>
+</nav>
+
+
+<div class="container-fluid main " style="padding: 5px 20px; background: #494e54 ">
+    <div class="row ">
+        <div class="col-sm-8 col-md-9 col-lg-9 col-xl-9" style="padding: 5px ;">
+
+            <div class="card bg-dark" style="padding: 15px 0;">
+
+                <div class="container">
+
+
+                    <main role="main">
+                        <div class="album">
+                            <div class="container" style="padding: 0">
+                                <div class="row">
+                                    <!--filter:alpha(Opacity=50);-moz-opacity:0.6;opacity: 0.6;"-->
+
+                                    <div class="col-md-4 "
+                                         th:each="picture:${pageList.content}">
+
+                                        <a th:href="@{'/view/'+${picture.pictureId}}">
+                                            <div style="margin: 0; ">
+                                                <div class="carousel slide"
+                                                     data-ride="carousel">
+
+                                                    <!-- 轮播图片 -->
+
+
+                                                    <div class="carousel-inner rounded " style="background: #3a3f45;">
+
+                                                        <div class="carousel-item active "
+                                                             th:if="${picture.pictureOne!=null}">
+                                                            <div class="d-flex justify-content-center align-items-center"
+                                                                 style="height: 220px; width: 100%">
+                                                                <img class="img-fluid thumbnail" loading="lazy"
+                                                                     th:src="@{'/pic/'+${picture.pictureOne}}">
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div class="carousel-item"
+                                                             th:if="${picture.pictureTwo!=null}">
+                                                            <div class="d-flex justify-content-center align-items-center"
+                                                                 style="height: 220px; width: 100%">
+                                                                <img class="img-fluid thumbnail" loading="lazy"
+                                                                     th:src="@{'/pic/'+${picture.pictureTwo}}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="carousel-item"
+                                                             th:if="${picture.pictureThree!=null}"
+                                                        >
+                                                            <div class="d-flex justify-content-center align-items-center"
+                                                                 style="height: 220px; width: 100%">
+                                                                <img class="img-fluid thumbnail" loading="lazy"
+                                                                     th:src="@{'/pic/'+${picture.pictureThree}}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="carousel-item "
+                                                             th:if="${picture.pictureFour!=null}"
+                                                        >
+                                                            <div class="d-flex justify-content-center align-items-center"
+                                                                 style="height: 220px; width: 100%">
+                                                                <img class="img-fluid thumbnail" loading="lazy"
+                                                                     th:src="@{'/pic/'+${picture.pictureFour}}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="carousel-item "
+                                                             th:if="${picture.pictureFive!=null}"
+                                                        >
+                                                            <div class="d-flex justify-content-center align-items-center"
+                                                                 style="height: 220px; width: 100%">
+                                                                <img class="img-fluid thumbnail" loading="lazy"
+                                                                     th:src="@{'/pic/'+${picture.pictureFive}}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="carousel-item "
+                                                             th:if="${picture.pictureSix!=null}">
+                                                            <div class="d-flex justify-content-center align-items-center"
+                                                                 style="height: 220px; width: 100%">
+                                                                <img class="img-fluid thumbnail" loading="lazy"
+                                                                     th:src="@{'/pic/'+${picture.pictureSix}}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="carousel-item "
+                                                             th:if="${picture.pictureSeven!=null}">
+                                                            <div class="d-flex justify-content-center align-items-center"
+                                                                 style="height: 220px; width: 100%">
+                                                                <img class="img-fluid thumbnail" loading="lazy"
+                                                                     th:src="@{'/pic/'+${picture.pictureSeven}}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="carousel-item "
+                                                             th:if="${picture.pictureEight!=null}">
+                                                            <div class="d-flex justify-content-center align-items-center"
+                                                                 style="height: 220px; width: 100%">
+                                                                <img class="img-fluid thumbnail" loading="lazy"
+                                                                     th:src="@{'/pic/'+${picture.pictureEight}}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="carousel-item "
+                                                             th:if="${picture.pictureNine!=null}">
+                                                            <div class="d-flex justify-content-center align-items-center"
+                                                                 style="height: 220px; width: 100%">
+                                                                <img class="img-fluid thumbnail" loading="lazy"
+                                                                     th:src="@{'/pic/'+${picture.pictureNine}}">
+                                                            </div>
+                                                        </div>
+
+
+                                                    </div>
+                                                    <p class="text-light"><small th:text="${picture.pictureSay}"
+                                                                                 style="overflow:hidden; text-overflow:ellipsis;display:-webkit-box;
+                                                     -webkit-box-orient:vertical;-webkit-line-clamp:1;">
+                                                    </small>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </a>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </main>
+
+                    <div class="container bg-dark" style="padding: 10px 0 0 0;margin: 0;">
+                        <!--分页-->
+                        <ul class="pagination " style="float: right ">
+                            <li class="page-item" th:if="${pageList.getNumber()>=1}"
+                            ><a class="page-link text-dark"
+                                th:href="@{${go}(page=${pageList.getNumber()-1})}">&lt;</a>
+                            </li>
+                            <li class="page-item" th:if="${pageList.getNumber()>=1}">
+                                <a class="page-link text-dark"
+                                   th:href="@{${go}(page=${0})}"
+                                   href="#">&laquo;</a>
+                            </li>
+                            <li class="page-item" th:if="${pageList.getNumber()-3>0}">
+                                <a class="page-link text-dark"
+                                   th:href="@{${go}(page=${pageList.getNumber()-3})}"
+                                   th:text="${pageList.getNumber()-2}"
+                                   href="#"></a></li>
+                            <li class="page-item" th:if="${pageList.getNumber()-2>0}">
+                                <a class="page-link text-dark"
+                                   th:href="@{${go}(page=${pageList.getNumber()-2})}"
+                                   th:text="${pageList.getNumber()-1}"
+                                   href="#"></a></li>
+                            <li class="page-item " th:if="${pageList.getNumber()-1>0}">
+                                <a class="page-link text-dark"
+                                   th:href="@{${go}(page=${pageList.getNumber()-1})}"
+                                   th:text="${pageList.getNumber()}"
+                                   href="#"></a></li>
+                            <li class="page-item  active">
+                                <a class=" page-link text-dark"
+                                   th:href="@{${go}(page=${pageList.getNumber()})}"
+                                   th:text="${pageList.getNumber()+1}"
+                                   href="#"></a></li>
+                            <li class="page-item" th:if="${pageList.getNumber()+1<pageList.getTotalPages()}"><a
+                                    class="page-link text-dark"
+                                    th:href="@{${go}(page=${pageList.getNumber()+1})}"
+                                    th:text="${pageList.getNumber()+2}"
+                                    href="#"></a></li>
+                            <li class="page-item" th:if="${pageList.getNumber()+2<pageList.getTotalPages()}"><a
+                                    class="page-link text-dark"
+                                    th:href="@{${go}(page=${pageList.getNumber()+2})}"
+                                    th:text="${pageList.getNumber()+3}"
+                                    href="#"></a></li>
+                            <li class="page-item" th:if="${pageList.getNumber()+3<pageList.getTotalPages()}"><a
+                                    class="page-link text-dark"
+                                    th:href="@{${go}(page=${pageList.getNumber()+3})}"
+                                    th:text="${pageList.getNumber()+4}"
+                                    href="#"></a></li>
+                            <li class="page-item" th:if="${pageList.getNumber()+1<pageList.getTotalPages()}">
+                                <a class="page-link text-dark"
+                                   th:href="@{${go}(page=${pageList.getTotalPages()-1})}"
+                                   href="#">&raquo;</a></li>
+                            <li class="page-item" th:if="${pageList.getNumber()+1<pageList.getTotalPages()}"><a
+                                    class="page-link text-dark"
+                                    th:href="@{${go}(page=${pageList.getNumber()+1})}">&gt;</a>
+                            </li>
+                        </ul>
+
+                    </div>
+
+                    <small><a href="http://duck.qifen.site/">大可图库</a></small>
+
+                </div>
+            </div>
+
+        </div>
+        <div class="col-sm-4 col-md-3 col-lg-3 col-xl-3" style="padding: 5px;">
+
+
+            <div class=" bg-dark card" style="padding: 12px 20px  0; ">
+
+                <h5 class="text-light"><small>公告:</small></h5>
+                <div style="height: 1px ; width: 100%; background: azure"></div>
+                <ul class="navbar-nav mr-auto">
+
+                    <li class="nav-item">
+
+                        <p class="nav-link " style="color: azure; margin-bottom: 10px"><small th:text="${tell}">
+                        </small>
+                        </p>
+                    </li>
+
+                </ul>
+            </div>
+
+
+            <div class=" bg-dark card col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12"
+                 style="margin: 10px 0; padding: 12px 20px  5px; ">
+
+                <h5 class="text-light"><small>说明:</small></h5>
+                <div style="height: 1px ; width: 100%; background: azure;"></div>
+                <div style="margin-bottom: 10px"
+                     class="text-light navbar-nav">
+
+                    <a style="margin: 0; padding: 0" href="http://duck.qifen.site/"><small
+                            class="text-primary">大可图库</small></a>
+                    <small class="text-light">所有页面点击大可图库字样都可回到主页</small>
+                    <small class="text-light">发布功能需要登录后才可用</small>
+                    <small class="text-light">如有bug欢迎反馈到QQ:858810078</small>
+
+
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+
+
+</body>
+</html>
+
+
+

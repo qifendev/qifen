@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>我的-大可图库</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script>
+        $(function () {
+
+            $("#avatar").click(function () {
+                $("#file").click();
+            });
+
+            $("#file").change(function () {
+                var file = $('#file')[0].files[0];
+                if (file !== null) {
+                    var formData = new FormData();
+                    formData.append("file", file);
+                    $.ajax({
+                        url: '/avatar',
+                        type: 'POST',
+                        cache: false,
+                        data: formData,
+                        processData: false,
+                        contentType: false
+                    }).done(function (res) {
+                        window.location.href = "/my";
+                        alert(res);
+                    }).fail(function (res) {
+                        window.location.href = "/my";
+                        alert(res);
+                    });
+                }
+            });
+
+            $("#nick").click(function () {
+                var nick = prompt("请输入昵称1-12位", "");
+                if (nick !== null) {
+                    $.ajax({
+                        type: "GET",
+                        url: '/nick/?nick=' + nick,
+                        cache: false,
+                        dataType: "html",
+                        success: function (msg) {
+                            window.location.href = "/my";
+                            alert(msg);
+                        },
+                        error: function (msg) {
+                            window.location.href = "/my";
+                            alert(msg);
+                        }
+                    });
+
+                }
+            });
+
+            $("#up").click(function () {
+                var up = prompt("请输入签名1-300位", "");
+                if (up !== null) {
+                    $.ajax({
+                        type: "GET",
+                        url: '/up/?up=' + up,
+                        cache: false,
+                        dataType: "html",
+                        success: function (msg) {
+                            window.location.href = "/my";
+                            alert(msg);
+                        },
+                        error: function (msg) {
+                            window.location.href = "/my";
+                            alert(msg);
+                        }
+                    });
+                }
+            });
+
+            $("#pas").click(function () {
+                var pas = prompt("请输入新密码8-20位", "");
+                var conPas = prompt("再次输入新密码8-20位", "");
+                if (pas === conPas) {
+                    if (pas !== null) {
+                        $.ajax({
+                            type: "GET",
+                            url: '/pas/?pas=' + pas,
+                            cache: false,
+                            dataType: "html",
+                            success: function (msg) {
+                                window.location.href = "/my";
+                                alert(msg);
+                            },
+                            error: function (msg) {
+                                window.location.href = "/my";
+                                alert(msg);
+                            }
+                        });
+                    }
+                } else {
+                    alert("两次密码输入不相同");
+                }
+            });
+
+
+        });
+    </script>
+</head>
+<body style="background: #494e54">
+<nav class="navbar navbar-expand-md navbar-dark  bg-dark">
+    <a class="navbar-brand text-light" th:href="@{/}">大可图库</a>
+
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" th:href="@{/my}">个人中心</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+
+<div class="container-fluid main " style="padding: 5px 20px; height: 100%;">
+    <div class="row ">
+
+        <div class="col-sm-4 col-md-3 col-lg-3 col-xl-3" style="padding: 5px;">
+
+            <div class=" bg-dark card" style="padding: 20px 20px 0;">
+                <img alt="头像" data-toggle="tooltip" title="这个是头像"
+                     class="rounded-circle border border-danger thumbnail"
+                     th:src="@{'/avatar/'+${user.getUserAvatar()}}"
+                     style="width:60px;margin-right: 20px; height: 60px;">
+                <input id="file" accept="image/*" type="file" name="file" style="display: none"/>
+                <a><small id="avatar" class="text-primary">修改/添加头像</small></a>
+                <div><h4 class="text-light" data-toggle="tooltip" style="margin: 0" title="这个是昵称"
+                         th:text="${user.getUserNickname()}"></h4>
+                    <a><small id="nick" class="text-primary">修改/添加昵称</small></a>
+                    <p class="text-light" data-toggle="tooltip" title="这个是签名" style="margin: 0"
+                       th:if="${user.getUserSignature()!=null}" th:text="${user.getUserSignature()}"></p>
+                    <a><small id="up" class="text-primary">修改/添加签名</small></a>
+                    <p class="text-secondary" data-toggle="tooltip" title="这个是邮箱"
+                       th:text="${'邮箱:'+user.getUserMail()}" style="margin-bottom: 20px"></p>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-sm-8 col-md-9 col-lg-9 col-xl-9" style="padding: 5px ;">
+
+            <div class="card bg-dark" style="padding: 18px 0;">
+                <!--我的-->
+                <div th:if="${go=='/my'}">
+
+                    <div class="container" style="padding: 0 20px">
+
+
+                        <!--一个item-->
+
+                        <div th:each="picture:${pageList.content}">
+                            <a th:href="@{'/view/'+${picture.getPictureId()}}">
+                                <div>
+                                    <div class="row" style="padding-left: 15px;">
+                                        <div class=" d-flex justify-content-center align-items-center"
+                                             style="margin: 2px; height: 100px;width: 100px; background: #3a3f45"
+                                             th:if="${picture.pictureOne!=null}">
+                                            <img class=" img-fluid" style="max-width: 100px;max-height: 100px" loading="lazy"
+                                                 th:src="@{'/pic/'+${picture.pictureOne}}">
+                                        </div>
+
+
+                                        <div class="rounded d-flex justify-content-center align-items-center"
+                                             style="margin: 2px; height: 100px;width: 100px; background: #3a3f45"
+                                             th:if="${picture.pictureTwo!=null}"><img loading="lazy"
+                                                class="img-fluid thumbnail" style="max-width: 100px;max-height: 100px"
+                                                th:src="@{'/pic/'+${picture.pictureTwo}}"></div>
+                                        <div class="rounded d-flex justify-content-center align-items-center"
+                                             style="margin: 2px; height: 100px;width: 100px; background: #3a3f45"
+                                             th:if="${picture.pictureThree!=null}"><img loading="lazy"
+                                                th:src="@{'/pic/'+${picture.pictureThree}}"
+                                                class=" img-fluid thumbnail"
+                                                style="max-width: 100px;max-height: 100px"></div>
+                                        <div class="rounded d-flex justify-content-center align-items-center"
+                                             style="margin: 2px; height: 100px;width: 100px; background: #3a3f45"
+                                             th:if="${picture.pictureFour!=null}"><img loading="lazy"
+                                                th:src="@{'/pic/'+${picture.pictureFour}}"
+                                                class=" img-fluid thumbnail"
+                                                style="max-width: 100px;max-height: 100px"></div>
+                                        <div class="rounded d-flex justify-content-center align-items-center"
+                                             style="margin: 2px; height: 100px;width: 100px; background: #3a3f45"
+                                             th:if="${picture.pictureFive!=null}"><img loading="lazy"
+                                                th:src="@{'/pic/'+${picture.pictureFive}}"
+                                                class=" img-fluid thumbnail"
+                                                style="max-width: 100px;max-height: 100px"></div>
+                                        <div class="rounded d-flex justify-content-center align-items-center"
+                                             style="margin: 2px; height: 100px;width: 100px; background: #3a3f45"
+                                             th:if="${picture.pictureSix!=null}">
+                                            <img loading="lazy" th:src="@{'/pic/'+${picture.pictureSix}}"
+                                                 class=" img-fluid thumbnail"
+                                                 style="max-width: 100px;max-height: 100px">
+                                        </div>
+                                        <div class="rounded d-flex justify-content-center align-items-center"
+                                             style="margin: 2px; height: 100px;width: 100px; background: #3a3f45"
+                                             th:if="${picture.pictureSeven!=null}"><img loading="lazy"
+                                                th:src="@{'/pic/'+${picture.pictureSeven}}"
+                                                class=" img-fluid thumbnail"
+                                                style="max-width: 100px;max-height: 100px"></div>
+                                        <div class="rounded d-flex justify-content-center align-items-center"
+                                             style="margin: 2px; height: 100px;width: 100px; background: #3a3f45"
+                                             th:if="${picture.pictureEight!=null}"><img loading="lazy"
+                                                th:src="@{'/pic/'+${picture.pictureEight}}"
+                                                class=" img-fluid thumbnail"
+                                                style="max-width: 100px;max-height: 100px"></div>
+                                        <div class="rounded d-flex justify-content-center align-items-center"
+                                             style="margin: 2px; height: 100px;width: 100px;background: #3a3f45"
+                                             th:if="${picture.pictureNine!=null}"><img loading="lazy"
+                                                th:src="@{'/pic/'+${picture.pictureNine}}"
+                                                class=" img-fluid thumbnail"
+                                                style="max-width: 100px;max-height: 100px"></div>
+
+
+                                    </div>
+                                    <div>
+                                        <h5 class="text-light" th:text="${picture.pictureSay}"
+                                            style="margin: 0;padding: 0"></h5>
+                                        <p class="text-secondary" style="margin: 0;padding: 0"
+                                           th:text="${picture.pictureFlag}"></p>
+                                        <p class="text-secondary float-left"
+                                           th:text="${#dates.format(picture.pictureTime,'yyyy.MM.dd HH:mm:ss')}"
+                                           style="margin: 0;padding: 0">
+                                        </p>
+
+                                        <a class="text-danger float-left" data-toggle="modal"
+                                           th:data-target="${'#m'+picture.pictureId}"
+                                           style="margin: 0 0 0 20px; padding: 0;">删除</a>
+
+
+                                        <!-- 模态框 -->
+                                        <div class="modal fade" th:id="${'m'+picture.pictureId}">
+                                            <div class="modal-dialog modal-sm">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <p class="modal-title">你确定删除图片吗?</p>
+                                                    </div>
+                                                    <div class="modal-body " style="padding: 0; margin: 0;">
+                                                        <a type="button" class="text-secondary float-right"
+                                                           style=" padding: 10px;"
+                                                           data-dismiss="modal">关闭
+                                                        </a>
+                                                        <a type="button" class="text-danger float-right"
+                                                           style=" padding: 10px"
+                                                           th:href="@{'/del/'+${picture.pictureId}+'/?page='+${pageList.getNumber()}}">
+                                                            删除</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+
+
+                                </div>
+                                <br>
+                                <div class="bg-secondary" style="height: 1px;width: 100%;margin: 20px 0;">
+                                </div>
+                            </a>
+                        </div>
+
+
+                    </div>
+
+                    <div th:if="${pageList.getTotalElements()}>0" style="margin-right: 20px;">
+                        <ul class="pagination" style="float: right ">
+                            <li class="page-item" th:if="${pageList.getNumber()>=1}"
+                            ><a class="page-link text-dark"
+                                th:href="@{${go}(page=${pageList.getNumber()-1})}">&lt;</a>
+                            </li>
+                            <li class="page-item" th:if="${pageList.getNumber()>=1}">
+                                <a class="page-link text-dark"
+                                   th:href="@{${go}(page=${0})}"
+                                   href="#">&laquo;</a>
+                            </li>
+                            <li class="page-item" th:if="${pageList.getNumber()-3>0}">
+                                <a class="page-link text-dark"
+                                   th:href="@{${go}(page=${pageList.getNumber()-3})}"
+                                   th:text="${pageList.getNumber()-2}"
+                                   href="#"></a></li>
+                            <li class="page-item" th:if="${pageList.getNumber()-2>0}">
+                                <a class="page-link text-dark"
+                                   th:href="@{${go}(page=${pageList.getNumber()-2})}"
+                                   th:text="${pageList.getNumber()-1}"
+                                   href="#"></a></li>
+                            <li class="page-item " th:if="${pageList.getNumber()-1>0}">
+                                <a class="page-link text-dark"
+                                   th:href="@{${go}(page=${pageList.getNumber()-1})}"
+                                   th:text="${pageList.getNumber()}"
+                                   href="#"></a></li>
+                            <li class="page-item  active">
+                                <a class=" page-link text-dark"
+                                   th:href="@{${go}(page=${pageList.getNumber()})}"
+                                   th:text="${pageList.getNumber()+1}"
+                                   href="#"></a></li>
+                            <li class="page-item" th:if="${pageList.getNumber()+1<pageList.getTotalPages()}"><a
+                                    class="page-link text-dark"
+                                    th:href="@{${go}(page=${pageList.getNumber()+1})}"
+                                    th:text="${pageList.getNumber()+2}"
+                                    href="#"></a></li>
+                            <li class="page-item" th:if="${pageList.getNumber()+2<pageList.getTotalPages()}"><a
+                                    class="page-link text-dark"
+                                    th:href="@{${go}(page=${pageList.getNumber()+2})}"
+                                    th:text="${pageList.getNumber()+3}"
+                                    href="#"></a></li>
+                            <li class="page-item" th:if="${pageList.getNumber()+3<pageList.getTotalPages()}"><a
+                                    class="page-link text-dark"
+                                    th:href="@{${go}(page=${pageList.getNumber()+3})}"
+                                    th:text="${pageList.getNumber()+4}"
+                                    href="#"></a></li>
+                            <li class="page-item" th:if="${pageList.getNumber()+1<pageList.getTotalPages()}">
+                                <a class="page-link text-dark"
+                                   th:href="@{${go}(page=${pageList.getTotalPages()-1})}"
+                                   href="#">&raquo;</a></li>
+                            <li class="page-item" th:if="${pageList.getNumber()+1<pageList.getTotalPages()}"><a
+                                    class="page-link text-dark"
+                                    th:href="@{${go}(page=${pageList.getNumber()+1})}">&gt;</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class=" mx-auto" th:if="${pageList.getTotalElements()}==0">
+                <span class="text-secondary">你还没有发布作品,点击
+                    <a href="/pub" class="text-primary">发布</a>发布作品</span></div>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+</div>
+
+
+</body>
+</html>

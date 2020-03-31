@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>发布-大可图库</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+
+
+    </script>
+
+</head>
+<body style="background: #494e54">
+<nav class="navbar navbar-expand-md navbar-dark  bg-dark">
+    <a class="navbar-brand text-white" th:href="@{/}">大可图库</a>
+
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav mr-auto">
+
+            <li class="nav-item active">
+                <a class="nav-link" href="#">上传图片</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+
+<div class="container-fluid main " style="padding: 5px 20px; height: 100%; background: #494e54">
+    <div class="row ">
+        <div class="col-sm-8 col-md-9 col-lg-9 col-xl-9" style="padding: 5px ;">
+
+            <div class="card bg-dark" style="padding: 15px 0;">
+
+                <div class="container" style="padding: 0">
+
+                    <div class="container">
+
+                        <form action="/upload" method="post" enctype="multipart/form-data">
+
+
+                            <input class="text-light" id="file" type="file" multiple="multiple" accept="image/*"
+                                   name="file">
+
+
+                            <br>
+                            <div class="row" id="imgList" style="padding-left: 15px;display: none">
+                                <div class="rounded d-flex justify-content-center align-items-center"
+                                     style="margin: 2px; display: none; height: 100px;width: 100px; background: #ffffff">
+                                    <img class="img-fluid">
+                                </div>
+
+
+                            </div>
+                            <br>
+
+
+                            <textarea class="control card col-sm-6 col-md-6 col-lg-7 col-xl-7" rows="5"
+                                      style="width: 100%; height: 100px;padding: 8px;"
+                                      name="say" placeholder="描述一下图片(1-300字)"></textarea><br>
+                            <input class="form-control col-sm-4 col-md-4 col-lg-4 col-xl-4" name="flag"
+                                   style="width: 100%;" placeholder="写个标签(1-30字)"/><br>
+                            <button type="submit" class="btn btn-success text-light">开始上传
+                            </button>
+                        </form>
+                        <br><br>
+                        <div class="col-sm-6 col-md-6 col-lg-7 col-xl-7" style="padding: 0" th:if="${info!=null}">
+                            <div class="card bg-danger text-white">
+                                <div class="card-body" th:text="${info}" style="padding: 0;"></div>
+                            </div>
+                        </div>
+                        <span class="text-secondary">
+            如想回到主页，可点击上方的大可图库回到<a class="text-primary" href="/">首页</a>。
+        </span>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+        <div class="col-sm-4 col-md-3 col-lg-3 col-xl-3" style="padding: 5px;">
+
+
+            <div class=" bg-dark card" style="padding: 12px 20px  0; ">
+
+                <h5 class="text-light"><small>上传规则:</small></h5>
+                <div style="height: 1px ; width: 100%; background: azure"></div>
+                <ul class="navbar-nav mr-auto">
+
+                    <li class="nav-item">
+
+                        <p class="nav-link " style="color: azure; margin-bottom: 10px"><small>
+                            1.禁止上传非法内容<br>
+                            2.图片最多上传9张，点击上传文件选择1-9张图片<br>
+                            3.每张图片不能超过10MB<br>
+                            4.描述图片最多写300字<br>
+                            5.标签最多写30字<br>
+                            6.点击上传之后请稍等，上传成功会跳转主页<br>
+                            7.手机端点击选取文件会出现只能选一个图片现象，推荐使用QQ浏览器，QQ浏览器可点击多选图片<br>
+                        </small>
+                        </p>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+</body>
+</html>
