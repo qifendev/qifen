@@ -4,7 +4,7 @@
 #
 # 运维（杀死jar）：
 # 1.linux下可通过netstat -lnp | grep 7778查看进程pid，然后根据进程pid杀死运行中的jar： kill -9 进程pid
-# 1.win下可通过netstat -ano | findstr 7778查看进程pid，然后根据进程pid杀死运行中的jar： taskkill -pid 进程pid -f
+# 2.win下可通过netstat -ano | findstr 7778查看进程pid，然后根据进程pid杀死运行中的jar： taskkill -pid 进程pid -f
 #
 
 server:
