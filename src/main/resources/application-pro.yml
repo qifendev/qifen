@@ -9,6 +9,9 @@
 
 server:
   port: 7778 #运行的端口
+  tomcat:
+    connection-timeout: 18000000
+    max-connections: 18000000
 
 # 下面这个文件目录必须手动创建
 # 里面可有3个文件夹也需要手动创建：pic用于存图片、avatar用于存头像、tell用于存公告（创建tell.txt文件在里面会显示在主页公告中）。
