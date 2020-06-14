@@ -25,7 +25,7 @@
 ![登陆](https://github.com/lijialuG/qifen/blob/master/Screenshot%20from%202020-03-31%2016-56-28.png?raw=true)
 
 ## 问题
-1.主页的搜索不支持模糊查询。
+1.上传图片没压缩，加载慢
 2.上传界面选图不可预览
 
 ## 最后
