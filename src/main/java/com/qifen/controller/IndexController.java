@@ -110,7 +110,7 @@ public class IndexController {
             model.addAttribute("search", "search");
             sort = new Sort.Order(Sort.Direction.DESC, "pictureView");
             pageable = PageRequest.of(page, size, Sort.by(sort));
-            pageList = pictureRepository.findByPictureSayLike(find, pageable);
+            pageList = pictureRepository.findByPictureSayLike("%" + find + "%", pageable);
             model.addAttribute("pageList", pageList);
             return "index";
         } else {
