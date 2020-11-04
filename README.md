@@ -1,4 +1,4 @@
-# 大可图库（DuckGallery）http://duck.qifen.site/
+# 大可图库（DuckGallery）
 本项目比较简单，适合初学者。使用SpringBoot、Thymeleaf、Jpa、BootStrap、等。
 ![主页展示](https://github.com/lijialuG/qifen/blob/master/Screenshot%20from%202020-03-31%2016-16-18.png?raw=true)
 
